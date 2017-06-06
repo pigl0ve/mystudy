@@ -67,9 +67,24 @@
 
     场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
 九 创建与合并分支
+    
     git branch -b 分支名
     
     -b 相当于git branch 分支名  git checkout 分支名	
+	
+	git里 主分支master HEAD 指向当前分支,当切换到其它分支时，HEAD指向此分支
+	
+	查看分支：git branch
+
+    创建分支：git branch <name>
+
+    切换分支：git checkout <name>
+
+    创建+切换分支：git checkout -b <name>
+
+    合并某分支到当前分支：git merge <name>
+
+    删除分支：git branch -d <name>
 	
    
 lt looks like git-am is in progress ,cannot rebase
