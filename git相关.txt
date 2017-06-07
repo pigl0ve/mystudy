@@ -87,6 +87,7 @@
     删除分支：git branch -d <name>
 	
 十 解决冲突
+解决冲突方法：
    
 lt looks like git-am is in progress ,cannot rebase
    rm -rf .git/rebase.apply;
