@@ -1,0 +1,5 @@
+#!usr/bin/env python
+
+一 输入与输出
+   print()
+   intput(raw_input)
