@@ -1,0 +1,6 @@
+     整个工程只有一个Makefile，听起来似乎是一件很疯狂的事情，因为这个Makefile可能会变得无比庞大和复杂。
+ 其实不用担心，我们可以按照模块来将这个Makefile划分成一个个Makefile片段（fragement），
+ 然后通过Makefile的include指令来将这些Makefile片段组装在一个Makefile中。
+ 与递归Makefile相比每一个模块现在拥有的是一个Makefile片段，而不是一个Makefile文件。
+ 这正是Android编译系统的设计思想和原则，也就是说，
+ 我们平时所编写的Android.mk编译脚本都只不过是整个Android编译系统的一个Makefile片段

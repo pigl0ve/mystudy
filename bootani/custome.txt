@@ -1,0 +1,40 @@
+1.开机logo：
+存放路径：Z:\zhanglei_test\MT6572_b\SIM5000_GIT\MT6572\ap_base\alps\mediatek\custom\common\lk\logo
+配置文件：Z:\zhanglei_test\MT6572_b\SIM5000_GIT\MT6572\ap_base\alps\mediatek\config\simcom72_cwet_kk\ProjectConfig.mk（系统原文件）或者Z:\zhanglei_test\MT6572_b\SIM5000_GIT\MT6572\zxl_single\base\alps\mediatek\config\simcom72_cwet_kk\ProjectConfig.mk(系统备份文件)
+CUSTOM_LK_LOGO配置开机静态画面
+BOOT_LOGO 配置boot画面
+2.开机动画：
+存放路径：Z:\zhanglei_test\MT6572_b\SIM5000_GIT\MT6572\ap_base\alps\operator\OP01\SPEC0200\SEGC
+配置文件：Z:\zhanglei_test\MT6572_b\SIM5000_GIT\MT6572\ap_base\alps\mediatek\config\simcom72_cwet_kk\ProjectConfig.mk（系统原文件）或者Z:\zhanglei_test\MT6572_b\SIM5000_GIT\MT6572\zxl_single\base\alps\mediatek\config\simcom72_cwet_kk\ProjectConfig.mk(系统备份文件)
+OPTR_SPEC_SEG_DEF=OP01_SPEC0200_SEGC（配置开机动画方案）
+MTK_VT3G324M_SUPPORT=no
+MTK_RELEASE_PACKAGE=rel_customer_basic rel_customer_platform_mt6572 rel_customer_operator_cmcc
+MTK_UMTS_TDD128_MODE=Yes
+MTK_NOTEBOOK_SUPPORT=yes
+MTK_APKINSTALLER_APP=no
+MTK_RTSP_BITRATE_ADAPTATION_SUPPORT=yes
+MTK_SHARED_SDCARD=no
+MTK_DATA_TRANSFER_APP=no
+注意：
+(1)Z:\zhanglei_test\MT6572_b\SIM5000_GIT\MT6572\zxl_single\base\alps\mediatek\operator\OP02\SPEC0200\SEGA\optr_apk_config.mk中
+    PRODUCT_PACKAGES += \
+
+    bootanimation.zip \  1
+    shutanimation.zip \  2
+    1、2表示开机动画和关机动画，若没有，则没有开关机动画
+(2)开机动画配置文件:E:\MT6572\Change_the_default_properties_Customer_Document.pdf
+(3)MODULE.TARGET.JAVA_LIBRARIES.libarity already defined by ... stop 
+由于 LOCAL_STATIC_JAVA_LIBRARIES := libarity  会引发错误信息。 
+目前解决方法是： 
+\build\core 目录下修改base_rules.mk 
+注释掉错误信息： 
+ifdef $(module_id) 
+#$(error $(LOCAL_PATH): $(module_id) already defined by $($(module_id))) 
+endif 
+$(module_id) := $(LOCAL_PATH) 
+--重新编译，这时可以通过了。
+
+更改之后关机无LTE动画！！ 
+
+
+OPTR_SPEC_SEG_DEF

@@ -1,0 +1,4 @@
+SystemUI:
+快捷开关控制：
+quick_settings_tiles_default
+quick_settings_tiles_extra
