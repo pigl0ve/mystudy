@@ -1,0 +1,37 @@
+----------------一 相关概念--------------------------------
+内存：      primary external storage 一般只能有一个 /storage/emulated/legacy
+TF外存储卡：secondary  external storage  零到多个
+
+Android对存储器的管理都统一到/storage下面
+
+
+/mnt/sdcard指向/storage/emulated/legacy
+同时sdcard0也是指向/storage/emulated/legacy，
+说明两者都是指的手机自带的外置存储器（手机自带的内存）。
+同时在/storage下有一个sdcard1目录，这个目录对应的就是手机的TF存储扩展卡。
+
+Environment.getExternalStorageDirectory()
+1获取的是手机自带的外置存储路径/storage/emulated/0（这个路径不同的手机可能不同）
+-->但都是指向/storage/emulated/legacy，即primary externalstorage路径。怎么操作真正的外置TF卡？
+
+
+
+--------------二获取相关路径-----------------------------
+        String[] mPathList = mStorageManager.getVolumePaths();
+        StorageVolume[] volumes = mStorageManager.getVolumeList();
+
+        // take off the absence sd card path,and mVolumePathList is the
+        // available path list
+        List<String> mVolumePathList = new ArrayList<String>();
+        List<StorageVolume> storageVolumes = new ArrayList<StorageVolume>();
+        android.util.Log.d("kangbin", "length:"+mPathList.length);
+        for (int i = 0; i < mPathList.length; i++) {
+            Log.d("kangbin", "Volume: " + volumes[i].getDescription(getActivity()) + " ,state is: " + 
+                    mStorageManager.getVolumeState(mPathList[i]) + " ,emulated is: " + volumes[i].isEmulated()
+                    + ", path is " + volumes[i].getPath());
+
+            if (!"not_present".equals(mStorageManager.getVolumeState(mPathList[i]))) {
+                mVolumePathList.add(mPathList[i]);
+                storageVolumes.add(volumes[i]);
+            }
+        }
