@@ -1,0 +1,24 @@
+一 禁用和启动四大主件
+setComponentEnabledSetting:
+
+在用到组件时，有时候我们可能暂时性的不使用组件，但又不想把组件kill掉，
+比如创建了一个broadcastReceiver广播监听器，用来想监听第一次开机启动
+后获得系统的许多相关信息，并保存在文件中，这样以后每次开机启动就不
+需要再去启动该服务了，也就是说如果没有把receiver关闭掉，就算是不做
+数据处理，但程序却还一直在后台运行会消耗电量和内存，这时候就需要把
+这个receiver给关闭掉。
+
+1禁止开机启动的Receiver
+
+2隐藏应用图标
+
+ private void disableComponent(Context context, String klass) {
+        ComponentName name = new ComponentName(context, klass);
+        PackageManager pm = context.getPackageManager();
+
+        // We need the DONT_KILL_APP flag, otherwise we will be killed
+        // immediately because we are in the same app.
+        pm.setComponentEnabledSetting(name,
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            PackageManager.DONT_KILL_APP);
+}

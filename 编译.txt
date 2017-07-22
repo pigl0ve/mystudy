@@ -1,0 +1,13 @@
+build/core/main.mk:
+    include $(BUILD_SYSTEM)/config.mk
+build/core/config.mk:
+    include $(BUILD_SYSTEM)/envsetup.mk
+build/core/envsetup.mk
+    include $(BUILD_SYSTEM)/product_config.mk
+build/core/product_config.mk
+    include $(BUILD_SYSTEM)/product.mk
+build/core/product.mk	
+     用来获得所有AndroidProduct.mk文件里定义的PRODUCT_MAKEFILES的值（其实是产品文件路径名）。    在vendor(或device)目录下，每个公司目录下都会存在一个AndroidProduct.mk文件，
+	 这个文件是用来定义这个公司的产品列表，每个产品用<product_name>.mk来表示
+AndroidProducts.mk
+PRODUCT_MAKEFILES := $(LOCAL_DIR)/full_zechin6737m_35g_m0.mk

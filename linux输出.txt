@@ -1,0 +1,13 @@
+[test @test test]# ls -al >  list.txt  
+将显示的结果输出到 list.txt 档案中，若该档案以存在则予以取代！ 
+[test @test test]# ls -al >> list.txt  
+将显示的结果累加到 list.txt 档案中，该档案为累加的，旧数据保留！ 
+[test @test test]# ls -al 1> list.txt 2> list.err  
+将显示的数据，正确的输出到 list.txt 错误的数据输出到 list.err 
+[test @test test]# ls -al 1> list.txt 2>&1  
+将显示的数据，不论正确或错误均输出到 list.txt 当中！ 
+[test @test test]# ls -al 1> list.txt 2> /dev/null 
+将显示的数据，正确的输出到 list.txt 错误的数据则予以丢弃！ 
+注意！错误与正确档案输出到同一个档案中，则必须以上面的方法来写！ 
+不能写成其它格式！
+这个观念相当的重要，尤其是在 /etc/crontab 当中执行的时候，如果我们已经知道错误的讯息为何，又不想要让错误的讯息一直填满 root 的信箱，就必须以 2> 搭配 /dev/null 这个垃圾桶黑洞装置，来将数据丢弃！这个相当的重要！
