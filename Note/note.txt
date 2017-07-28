@@ -22,3 +22,20 @@ setComponentEnabledSetting:
             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
             PackageManager.DONT_KILL_APP);
 }
+
+二 修改user版本mtklogger默认打开
+alps/vendor/mediatek/proprietary/external/xlog/tools/mtklog-config-user.prop文件中对应字段值：
+com.mediatek.log.mobile.enabled
+
+三 
+Android 如何修改Sim卡语言自适应
+updateMccMncConfiguration
+
+四 编译
+
+  mk
+  makeMtk
+  . "mediatek/config/${project}/ProjectConfig.mk from $ini\n"
+  $makeCmd = "make -f mediatek/build/makemtk.mk $cmdArg @mOpts";
+  
+  ./build/core/Makefile:205:BUILDINFO_SH := build/tools/buildinfo.sh

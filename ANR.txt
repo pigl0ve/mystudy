@@ -1,0 +1,13 @@
+那么哪些场景会造成ANR呢？
+
+Service Timeout:服务在20s内未执行完成；
+BroadcastQueue Timeout：比如前台广播在10s内执行完成
+ContentProvider Timeout：内容提供者执行超时
+inputDispatching Timeout: 输入事件分发超时5s，包括按键分发事件的超时。
+
+
+
+1Timeout executing service
+2Timeout of broadcast
+3ContentProvider not responding
+4 Input dispatching timed out 
