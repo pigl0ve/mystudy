@@ -52,6 +52,11 @@ import com.android.launcher3.compat.UserHandleCompat;
 import java.util.List;
 import java.util.Set;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.ApplicationInfo;
+import android.util.Log;
+
+
 import com.mediatek.launcher3.ext.LauncherLog;
 public class DeleteDropTarget extends ButtonDropTarget {
     private static final String TAG = "DeleteDropTarget";
@@ -162,23 +167,27 @@ public class DeleteDropTarget extends ButtonDropTarget {
                     item.itemType == LauncherSettings.Favorites.ITEM_TYPE_SHORTCUT) {
                 return true;
             }
-
-            if (!LauncherAppState.isDisableAllApps() &&
+            //kangbin
+            //!LauncherAppState.isDisableAllApps()
+            if (LauncherAppState.isDisableAllApps() &&
                     item.itemType == LauncherSettings.Favorites.ITEM_TYPE_FOLDER) {
                 return true;
             }
-
-            if (!LauncherAppState.isDisableAllApps() &&
+            //kangbin
+            //!LauncherAppState.isDisableAllApps()
+            if (LauncherAppState.isDisableAllApps() &&
                     item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION &&
                     item instanceof AppInfo) {
                 AppInfo appInfo = (AppInfo) info;
                 return (appInfo.flags & AppInfo.DOWNLOADED_FLAG) != 0;
             }
 
+            //LauncherAppState.isDisableAllApps()
             if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION &&
                 item instanceof ShortcutInfo) {
-                if (LauncherAppState.isDisableAllApps()) {
+                if (!LauncherAppState.isDisableAllApps()) {
                     ShortcutInfo shortcutInfo = (ShortcutInfo) info;
+                    android.util.Log.d("kangbin","zzzzz");
                     return (shortcutInfo.flags & AppInfo.DOWNLOADED_FLAG) != 0;
                 } else {
                     return true;
@@ -191,8 +200,10 @@ public class DeleteDropTarget extends ButtonDropTarget {
     @Override
     public void onDragStart(DragSource source, Object info, int dragAction) {
         boolean isVisible = true;
-        boolean useUninstallLabel = !LauncherAppState.isDisableAllApps() &&
-                isAllAppsApplication(source, info);
+        //kangbin
+        /*boolean useUninstallLabel = !LauncherAppState.isDisableAllApps() &&
+                isAllAppsApplication(source, info);*/
+        boolean useUninstallLabel = LauncherAppState.isDisableAllApps();
         boolean useDeleteLabel = !useUninstallLabel && source.supportsDeleteDropTarget();
 
         // If we are dragging an application from AppsCustomize, only show the control if we can
@@ -307,13 +318,17 @@ public class DeleteDropTarget extends ButtonDropTarget {
         if (LauncherAppState.isDisableAllApps() && isWorkspaceOrFolderApplication(d)) {
             ShortcutInfo shortcut = (ShortcutInfo) d.dragInfo;
             // Only allow manifest shortcuts to initiate an un-install.
-            return !InstallShortcutReceiver.isValidShortcutLaunchIntent(shortcut.intent);
+            //kangbin
+            //return !InstallShortcutReceiver.isValidShortcutLaunchIntent(shortcut.intent);
+            return InstallShortcutReceiver.isValidShortcutLaunchIntent(shortcut.intent);
         }
         return false;
     }
 
     private void completeDrop(DragObject d) {
         ItemInfo item = (ItemInfo) d.dragInfo;
+        //kangbin
+        int myAppInfoFlags = 0;
         boolean wasWaitingForUninstall = mWaitingForUninstall;
         mWaitingForUninstall = false;
         if (LauncherLog.DEBUG) {
@@ -331,8 +346,26 @@ public class DeleteDropTarget extends ButtonDropTarget {
                 final ComponentName componentName = shortcut.intent.getComponent();
                 final DragSource dragSource = d.dragSource;
                 final UserHandleCompat user = shortcut.user;
+                /**
+                 *获取手机中所有已安装的应用，根据包名，判断当前应用是否系统应用
+                 */
+                List<PackageInfo> packages = getContext().getPackageManager().getInstalledPackages(0);
+
+                for (int i = 0; i < packages.size(); i++) {
+                    PackageInfo packageInfo = packages.get(i);
+                    if (packageInfo.packageName.equals(componentName.getPackageName())) {
+                        if ((packageInfo.applicationInfo.flags &
+                                ApplicationInfo.FLAG_SYSTEM)==0) {
+                            Log.e(TAG, "This is user app ");
+                            myAppInfoFlags = 1;
+                        }
+                    }
+                }/*wan*/
+                //kangbin
                 mWaitingForUninstall = mLauncher.startApplicationUninstallActivity(
-                        componentName, shortcut.flags, user);
+                        componentName, myAppInfoFlags, user);
+                //mWaitingForUninstall = mLauncher.startApplicationUninstallActivity(
+                //        componentName, shortcut.flags, user);
                 if (mWaitingForUninstall) {
                     final Runnable checkIfUninstallWasSuccess = new Runnable() {
                         @Override
