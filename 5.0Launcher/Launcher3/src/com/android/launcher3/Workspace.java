@@ -2409,7 +2409,8 @@ public class Workspace extends SmoothPagedView
         float finalBackgroundAlpha = (stateIsSpringLoaded || stateIsOverview) ? 1.0f : 0f;
         float finalHotseatAndPageIndicatorAlpha = (stateIsNormal || stateIsSpringLoaded) ? 1f : 0f;
         float finalOverviewPanelAlpha = stateIsOverview ? 1f : 0f;
-        float finalSearchBarAlpha = !stateIsNormal ? 0f : 1f;
+        //kangbin
+        float finalSearchBarAlpha = !stateIsNormal ? 0f : 0f;
         float finalWorkspaceTranslationY = stateIsOverview || stateIsOverviewHidden ?
                 getOverviewModeTranslationY() : 0;
 
