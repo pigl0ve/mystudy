@@ -770,7 +770,7 @@ public class DeviceProfile {
         int orientation = isLandscape ? CellLayout.LANDSCAPE : CellLayout.PORTRAIT;
         Rect padding = getWorkspacePadding(orientation);
         workspace.setLayoutParams(lp);
-        workspace.setPadding(padding.left, padding.top, padding.right, padding.bottom);
+        workspace.setPadding(padding.left, padding.top/4, padding.right, padding.bottom);
         workspace.setPageSpacing(getWorkspacePageSpacing(orientation));
 
         // Layout the hotseat
