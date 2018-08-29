@@ -485,7 +485,8 @@ public class IconCache {
 			&&!componentName.getClassName().equals("com.baidu.baidumaps.WelcomeScreen")
 			&&!componentName.getClassName().equals("com.sohu.inputmethod.sogou.SogouIMELauncher")
 		 	){
-	        entry.icon = covertThirdIcon(entry.icon);
+			 //kangbin
+	        //entry.icon = covertThirdIcon(entry.icon);
 	     }
 	     /*lvyanbing add for icon */
         }
